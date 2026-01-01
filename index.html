@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>若手技術者の安全管理システム ver.1.0.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+    
+    <!-- エクスポート機能用ライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+    
+    <!-- リスク可視化（番号ピン＋点線矢印＋ハッチング） -->
+    <script src="/static/risk-visualization.js"></script>
+    
+    <style>
+        .risk-card {
+            transition: all 0.3s ease;
+        }
+        .risk-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        #preview-container {
+            max-width: 100%;
+            max-height: none; /* 画像全体を表示 */
+            overflow: visible; /* スクロール可能 */
+        }
+        #preview-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- ヘッダー -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i class="fas fa-shield-alt mr-3"></i>
+                若手技術者の安全管理システム
+                <span class="ml-3 text-sm bg-blue-500 text-white px-3 py-1 rounded-full">ver.1.0.1</span>
+            </h1>
+            <p class="text-sm mt-2 text-blue-100">写真ベースのAI安全リスク分析</p>
+            <p class="text-xs mt-1 text-blue-200">100シナリオデータベース | 労働安全衛生法準拠 | AI画像認識による工種判定</p>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- 画像アップロードセクション -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+                <i class="fas fa-camera mr-2 text-blue-600"></i>
+                工事現場写真をアップロード
+            </h2>
+            <p class="text-sm text-gray-600 mb-4">
+                写真から自動的に工種を判定し、P0優先順（墜落→重機→吊り→電気→火気）でリスクを抽出します
+            </p>
+            
+            <div class="mb-4">
+                <div id="dropZone" class="flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-blue-300 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-500 transition">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-blue-400 mb-3"></i>
+                    <p class="text-base text-gray-700 font-semibold mb-1">クリックまたはドラッグ＆ドロップで画像をアップロード</p>
+                    <p class="text-xs text-gray-500 mt-2">PNG, JPG, JPEG (最大10MB)</p>
+                    <p class="text-xs text-blue-600 mt-1">AI画像認識 + 100シナリオDBで工種を自動判定</p>
+                </div>
+                <input id="imageInput" type="file" accept="image/*" class="hidden" />
+            </div>
+
+            <!-- プレビュー表示 -->
+            <div id="preview-container" class="hidden mb-4 rounded-lg border-2 border-gray-300 overflow-hidden">
+                <img id="preview-image" alt="プレビュー" />
+            </div>
+
+            <!-- 🏗️ v67.7: 工事名入力欄 -->
+            <div id="projectNameContainer" class="mb-4 p-4 bg-white rounded-lg border border-green-200">
+                <label for="projectNameInput" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-hard-hat mr-2 text-green-600"></i>工事名
+                </label>
+                <input 
+                    type="text" 
+                    id="projectNameInput" 
+                    class="shadow appearance-none border border-gray-300 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition" 
+                    placeholder="例：〇〇橋梁修繕工事 / △△工区PC床版設置工事"
+                />
+                <p class="mt-1 text-xs text-gray-500">
+                    <i class="fas fa-info-circle mr-1"></i>工事名は履歴に保存され、復元時に自動入力されます
+                </p>
+            </div>
+
+            <!-- 🎯 v60.6: 初回分析用のモデル選択UI -->
+            <div id="analysisModelSelector" class="mb-4 p-4 bg-white rounded-lg border border-blue-200">
+                <div class="text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-brain mr-2 text-blue-600"></i>AIモデル選択
+                </div>
+                <div class="flex gap-4">
+                    <label class="flex items-center cursor-pointer p-2 rounded hover:bg-blue-50 transition whitespace-nowrap">
+                        <input type="radio" name="analysisModel" value="flash" id="analysisModelFlash" checked class="mr-2">
+                        <div class="whitespace-nowrap">
+                            <span class="font-medium text-gray-800">Gemini 3.0 Flash</span>
+                            <span class="text-xs text-gray-500 ml-1">(高速・約0.7円/回)</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center cursor-pointer p-2 rounded hover:bg-blue-50 transition whitespace-nowrap">
+                        <input type="radio" name="analysisModel" value="pro" id="analysisModelPro" class="mr-2">
+                        <div class="whitespace-nowrap">
+                            <span class="font-medium text-gray-800">Gemini 3.0 Pro</span>
+                            <span class="text-xs text-gray-500 ml-1">(高精度・約2.9円/回)</span>
+                        </div>
+                    </label>
+                </div>
+                <div id="analysisModelStatus" class="mt-2 text-xs text-blue-600 whitespace-nowrap">
+                    <i class="fas fa-check-circle mr-1"></i>選択中: Gemini 3.0 Flash（高速・約0.7円/回）
+                </div>
+            </div>
+
+            <button id="analyzeBtn" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-lg transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center shadow-lg" disabled>
+                <i class="fas fa-search-plus mr-2"></i>
+                安全リスクを分析（統括安全衛生責任者レベル・100シナリオDB）
+            </button>
+            
+            <!-- 📦 v67.0: 履歴ボタン -->
+            <button id="historyBtn" onclick="openHistoryModal()" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold py-3 px-6 rounded-lg transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center shadow-lg mt-3" disabled>
+                <i class="fas fa-history mr-2"></i>履歴 (0/30)
+            </button>
+        </div>
+
+        <!-- 分析結果表示エリア -->
+        <div id="results" class="hidden">
+            <!-- 結果はapp.jsで動的に生成 -->
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">© 2025 建設現場 安全管理システム | 労働安全衛生法準拠 | 統括安全衛生責任者版</p>
+            <p class="text-xs mt-2 text-gray-400">100シナリオデータベース・AI画像認識による工種自動判定</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    
+    <!-- 📥 エクスポート機能用CDNライブラリ (v67.14) -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    
+    <script src="/static/safety-scenarios.js"></script>
+    <script src="/static/app_complete.js?v=20260101_67_15"></script>
+    
+    <!-- イベントリスナー強制再登録（完全修正版） -->
+    <script>
+        console.log('📌 インラインスクリプト開始');
+        
+        // ページ完全読み込み後に強制的にイベントリスナーを登録
+        window.addEventListener('load', function() {
+            console.log('🚀 window.load イベント発火 - 強制再初期化');
+            
+            // 少し遅延させてから実行（DOMとJavaScriptが完全に準備できるまで待つ）
+            setTimeout(function() {
+                console.log('⏰ 遅延実行開始（1000ms後）');
+                
+                // グローバルスコープから関数を取得
+                if (typeof window.setupEventListeners === 'function') {
+                    console.log('✅ window.setupEventListeners関数が見つかりました - 再実行');
+                    window.setupEventListeners();
+                } else if (typeof setupEventListeners === 'function') {
+                    console.log('✅ setupEventListeners関数が見つかりました - 再実行');
+                    setupEventListeners();
+                } else {
+                    console.error('❌ setupEventListeners関数が見つかりません');
+                    console.error('🔍 window内容:', Object.keys(window).filter(k => k.includes('setup')));
+                    
+                    // 最終手段：DOMから直接イベントリスナーを登録
+                    console.log('🆘 緊急フォールバック: 直接イベントリスナー登録');
+                    const dropZone = document.getElementById('dropZone');
+                    const imageInput = document.getElementById('imageInput');
+                    const analyzeBtn = document.getElementById('analyzeBtn');
+                    
+                    if (dropZone && imageInput) {
+                        console.log('✅ 緊急登録: dropZoneクリックイベント');
+                        dropZone.addEventListener('click', function(e) {
+                            console.log('🖱️ [緊急] dropZoneクリック');
+                            e.preventDefault();
+                            imageInput.click();
+                        });
+                        
+                        console.log('✅ 緊急登録: dropZoneドラッグ&ドロップイベント');
+                        dropZone.addEventListener('drop', function(e) {
+                            console.log('📦 [緊急] ドロップイベント');
+                            e.preventDefault();
+                            e.stopPropagation();
+                            const files = e.dataTransfer.files;
+                            if (files && files.length > 0) {
+                                console.log('📁 [緊急] ファイル処理:', files[0].name);
+                                const reader = new FileReader();
+                                reader.onload = function(evt) {
+                                    const previewImg = document.getElementById('preview-image');
+                                    const previewContainer = document.getElementById('preview-container');
+                                    if (previewImg && previewContainer) {
+                                        previewImg.src = evt.target.result;
+                                        previewContainer.classList.remove('hidden');
+                                    }
+                                    if (analyzeBtn) {
+                                        analyzeBtn.disabled = false;
+                                    }
+                                };
+                                reader.readAsDataURL(files[0]);
+                            }
+                        });
+                        
+                        ['dragenter', 'dragover'].forEach(eventName => {
+                            dropZone.addEventListener(eventName, function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                dropZone.classList.add('border-blue-500', 'bg-blue-50', 'border-4');
+                            });
+                        });
+                        
+                        dropZone.addEventListener('dragleave', function(e) {
+                            e.preventDefault();
+                            dropZone.classList.remove('border-blue-500', 'bg-blue-50', 'border-4');
+                        });
+                        
+                        console.log('✅ 緊急フォールバック完了');
+                    } else {
+                        console.error('❌ 緊急登録失敗: 要素が見つかりません');
+                    }
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+  
