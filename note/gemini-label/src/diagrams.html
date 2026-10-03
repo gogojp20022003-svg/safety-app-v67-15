@@ -124,7 +124,7 @@
   #f02a .shots { display: flex; gap: 24px; margin-top: 34px; }
   #f02a .shot { flex: 1; padding: 18px 18px 22px; text-align: center; }
   #f02a .shot .ph { position: relative; height: 330px; border-radius: 14px; overflow: hidden; background: #eee; }
-  #f02a .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #f02a .shot img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.07); }
   #f02a .mark { position: absolute; top: 10px; left: 10px; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 40px; font-weight: 900; color: #fff; border: 4px solid #fff; }
   #f02a .shot h3 { font-size: 30px; font-weight: 900; margin-top: 16px; }
   #f02a .shot p { font-size: 22px; color: var(--sub); margin-top: 6px; line-height: 1.5; }
@@ -133,7 +133,8 @@
   /* 02c coffee label */
   #f02c .body { display: flex; gap: 30px; margin-top: 30px; }
   #f02c .pics { width: 330px; flex: none; display: flex; flex-direction: column; gap: 14px; }
-  #f02c .pics img { width: 100%; border-radius: 14px; display: block; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  #f02c .pics .pw { height: 360px; border-radius: 14px; overflow: hidden; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  #f02c .pics img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.07); }
   #f02c .pics .cap { font-size: 18px; color: var(--mute); text-align: center; }
   #f02c .notes { flex: 1; display: flex; flex-direction: column; gap: 14px; }
   #f02c .n { padding: 16px 22px; }
@@ -231,17 +232,17 @@
   <h2>缶コーヒーの撮影は、3回目で成功</h2>
   <div class="shots">
     <div class="shot card">
-      <div class="ph"><img src="photos/coffee_1_first.jpg" alt=""><span class="mark" style="background:var(--danger)">✕</span></div>
+      <div class="ph"><img src="photos/coffee_1_first.webp" alt=""><span class="mark" style="background:var(--danger)">✕</span></div>
       <h3>1回目：缶ごと撮影</h3>
       <p>「原材料名がない」と指摘</p>
     </div>
     <div class="shot card">
-      <div class="ph"><img src="photos/coffee_2_zoom.jpg" alt=""><span class="mark" style="background:var(--danger)">✕</span></div>
+      <div class="ph"><img src="photos/coffee_2_zoom.webp" alt=""><span class="mark" style="background:var(--danger)">✕</span></div>
       <h3>2回目：ズーム</h3>
       <p>写したのは注意書きの面</p>
     </div>
     <div class="shot card">
-      <div class="ph"><img src="photos/coffee_3_ingredients.jpg" alt=""><span class="mark" style="background:var(--sup)">✓</span></div>
+      <div class="ph"><img src="photos/coffee_3_ingredients.webp" alt=""><span class="mark" style="background:var(--sup)">✓</span></div>
       <h3>3回目：缶を回した</h3>
       <p>原材料名の枠が写った！</p>
     </div>
@@ -256,7 +257,8 @@
   <h2>缶コーヒー1本のラベルから、ここまでわかった</h2>
   <div class="body">
     <div class="pics">
-      <img src="photos/coffee_3_ingredients.jpg" alt="">
+      <div class="pw"><img src="photos/coffee_3_ingredients.webp" alt=""></div>
+      <div class="pw"><img src="photos/coffee_4_front.webp" alt=""></div>
       <div class="cap">筆者撮影（185g缶）</div>
     </div>
     <div class="notes">
