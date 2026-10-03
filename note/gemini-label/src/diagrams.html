@@ -62,23 +62,6 @@
   #f01 .arrow { width: 40px; display: grid; place-items: center; font-size: 56px; color: var(--mute); font-weight: 900; }
   #f01 .note { margin-top: 30px; font-size: 26px; font-weight: 700; background: var(--danger-soft); color: #991b1b; padding: 18px 26px; border-radius: 16px; }
 
-  /* 02 food */
-  #f02 .label { margin-top: 34px; padding: 26px 30px; font-size: 27px; line-height: 1.9; border: 3px solid var(--ink); border-radius: 12px; background: #fff; }
-  #f02 .label b { font-weight: 900; }
-  #f02 .seg-a { background: #fff4c2; padding: 2px 6px; border-radius: 6px; }
-  #f02 .seg-b { background: #dcecff; padding: 2px 6px; border-radius: 6px; }
-  #f02 .slash { color: var(--danger); font-weight: 900; font-size: 46px; padding: 0 6px; vertical-align: -4px; }
-  #f02 .seg-c { white-space: nowrap; background: var(--danger-soft); padding: 2px 6px; border-radius: 6px; font-weight: 700; }
-  #f02 .legend { display: flex; gap: 18px; margin-top: 22px; }
-  #f02 .lg { flex: 1; padding: 18px 22px; border-radius: 16px; font-size: 22px; line-height: 1.5; }
-  #f02 .lg b { display: block; font-size: 28px; font-weight: 900; margin-bottom: 4px; }
-  #f02 .allergy { display: flex; gap: 22px; margin-top: 30px; }
-  #f02 .al { flex: 1; padding: 24px 26px; }
-  #f02 .al .q { font-size: 25px; font-weight: 700; background: #f3f4f6; padding: 10px 14px; border-radius: 10px; }
-  #f02 .al .a { font-size: 28px; font-weight: 900; margin-top: 14px; }
-  #f02 .al .d { font-size: 23px; color: var(--sub); margin-top: 6px; line-height: 1.5; }
-  #f02 .news { margin-top: 24px; display: flex; align-items: center; gap: 18px; background: var(--food-soft); border: 2px solid var(--food); border-radius: 16px; padding: 16px 22px; font-size: 25px; font-weight: 700; }
-  #f02 .news .badge { background: var(--food); color: #fff; font-weight: 900; padding: 6px 14px; border-radius: 10px; white-space: nowrap; }
 
   /* 03 detergent */
   #f03 .scale { margin-top: 40px; }
@@ -137,6 +120,41 @@
   #f05 .cl b { font-size: 23px; font-weight: 900; line-height: 1.3; white-space: nowrap; }
   #f05 .cl span { font-size: 18px; color: var(--sub); line-height: 1.35; }
 
+  /* 02a coffee retake */
+  #f02a .shots { display: flex; gap: 24px; margin-top: 34px; }
+  #f02a .shot { flex: 1; padding: 18px 18px 22px; text-align: center; }
+  #f02a .shot .ph { position: relative; height: 330px; border-radius: 14px; overflow: hidden; background: #eee; }
+  #f02a .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #f02a .mark { position: absolute; top: 10px; left: 10px; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 40px; font-weight: 900; color: #fff; border: 4px solid #fff; }
+  #f02a .shot h3 { font-size: 30px; font-weight: 900; margin-top: 16px; }
+  #f02a .shot p { font-size: 22px; color: var(--sub); margin-top: 6px; line-height: 1.5; }
+  #f02a .tip { margin-top: 28px; background: var(--gem-soft); color: #3b2fd1; border-radius: 16px; padding: 18px 24px; font-size: 25px; font-weight: 700; line-height: 1.5; }
+
+  /* 02c coffee label */
+  #f02c .body { display: flex; gap: 30px; margin-top: 30px; }
+  #f02c .pics { width: 330px; flex: none; display: flex; flex-direction: column; gap: 14px; }
+  #f02c .pics img { width: 100%; border-radius: 14px; display: block; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  #f02c .pics .cap { font-size: 18px; color: var(--mute); text-align: center; }
+  #f02c .notes { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  #f02c .n { padding: 16px 22px; }
+  #f02c .n .lb { display: inline-block; font-size: 19px; font-weight: 900; color: #fff; padding: 3px 12px; border-radius: 8px; }
+  #f02c .n .t { font-size: 26px; font-weight: 900; margin-top: 8px; }
+  #f02c .n .d { font-size: 21px; color: var(--sub); margin-top: 4px; line-height: 1.5; }
+  #f02c .n .src { font-size: 17px; color: var(--mute); margin-top: 4px; }
+  #f02c .adds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+  #f02c .add { background: #dcecff; border-radius: 12px; padding: 10px 12px; }
+  #f02c .add b { font-size: 22px; font-weight: 900; display: block; }
+  #f02c .add span { font-size: 18px; color: var(--sub); line-height: 1.4; display: block; margin-top: 2px; }
+
+  /* 02e coffee check */
+  #f02e .rows { margin-top: 30px; display: flex; flex-direction: column; gap: 16px; }
+  #f02e .row { display: flex; align-items: center; gap: 22px; padding: 18px 26px; }
+  #f02e .judge { width: 76px; height: 76px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 40px; font-weight: 900; color: #fff; }
+  #f02e .row .t { font-size: 28px; font-weight: 900; }
+  #f02e .row .d { font-size: 22px; color: var(--sub); margin-top: 4px; line-height: 1.5; }
+  #f02e .lesson { margin-top: 24px; text-align: center; font-size: 28px; font-weight: 900; }
+  #f02e .lesson em { font-style: normal; background: linear-gradient(transparent 60%, #ffd27a 60%); }
+
   /* 06 summary */
   #f06 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 34px; }
   #f06 .cell { padding: 0; overflow: hidden; }
@@ -167,7 +185,7 @@
   <div class="phone"><div class="screen">
     <div class="photo"></div>
     <div class="bub me">この成分、なに？</div>
-    <div class="bub ai">「／」の後ろは添加物です。調味料（アミノ酸等）は、うま味を足す役目で…</div>
+    <div class="bub ai">「／」の後ろは添加物です。乳化剤は、ミルクとコーヒーを仲良く混ぜる役目で…</div>
   </div></div>
 </section>
 
@@ -207,32 +225,82 @@
   <div class="credit">Geminiとやってみた｜商品ラベル編</div>
 </section>
 
-<!-- 02 食べ物 -->
-<section class="fig" id="f02">
-  <span class="tag" style="background:var(--food)">食べ物編</span>
-  <h2>「／（スラッシュ）」が食材と添加物の境界線</h2>
-  <div class="label">
-    <b>原材料名：</b><span class="seg-a">じゃがいも（国産）、植物油、食塩、たんぱく加水分解物</span><br><span class="slash">／</span><span class="seg-b">調味料（アミノ酸等）、香料、甘味料（ステビア）</span>、<br><span class="seg-c">（一部に小麦・大豆を含む）</span>
-  </div>
-  <div class="legend">
-    <div class="lg" style="background:#fff4c2"><b>「／」の前＝食材</b>重さの多い順に並ぶ</div>
-    <div class="lg" style="background:#dcecff"><b>「／」の後ろ＝添加物</b>多い順。（ ）内は物質名</div>
-    <div class="lg" style="background:var(--danger-soft)"><b>アレルギー表示</b>原材料にこれが入っている</div>
-  </div>
-  <div class="allergy">
-    <div class="al card">
-      <div class="q">「一部に小麦・大豆を含む」</div>
-      <div class="a" style="color:var(--danger)">＝ 中に入っている</div>
-      <div class="d">この食品の原材料そのものに使われている</div>
+<!-- 02a 缶コーヒー 撮り直し -->
+<section class="fig" id="f02a">
+  <span class="tag" style="background:var(--food)">実際にやってみた</span>
+  <h2>缶コーヒーの撮影は、3回目で成功</h2>
+  <div class="shots">
+    <div class="shot card">
+      <div class="ph"><img src="photos/coffee_1_first.jpg" alt=""><span class="mark" style="background:var(--danger)">✕</span></div>
+      <h3>1回目：缶ごと撮影</h3>
+      <p>「原材料名がない」と指摘</p>
     </div>
-    <div class="al card">
-      <div class="q">「同じ工場で えび を含む製品を製造」</div>
-      <div class="a" style="color:var(--food)">＝ ごく微量 混ざるかも</div>
-      <div class="d">原材料ではないが、工場で扱っている（コンタミネーション）</div>
+    <div class="shot card">
+      <div class="ph"><img src="photos/coffee_2_zoom.jpg" alt=""><span class="mark" style="background:var(--danger)">✕</span></div>
+      <h3>2回目：ズーム</h3>
+      <p>写したのは注意書きの面</p>
+    </div>
+    <div class="shot card">
+      <div class="ph"><img src="photos/coffee_3_ingredients.jpg" alt=""><span class="mark" style="background:var(--sup)">✓</span></div>
+      <h3>3回目：缶を回した</h3>
+      <p>原材料名の枠が写った！</p>
     </div>
   </div>
-  <div class="news"><span class="badge">2026年4月〜</span>表示義務の「特定原材料」にカシューナッツが追加され9品目に（2028年3月末まで移行期間）</div>
-  <div class="credit">※ラベルは架空の例です</div>
+  <div class="tip">💡 コツ：「原材料名」と書かれた四角い枠を探してから撮る。写っていないとGeminiが正直に教えてくれるので、撮り直せばOK</div>
+  <div class="credit">Geminiとやってみた｜商品ラベル編</div>
+</section>
+
+<!-- 02c 缶コーヒー ラベル解読 -->
+<section class="fig" id="f02c">
+  <span class="tag" style="background:var(--food)">実際にやってみた</span>
+  <h2>缶コーヒー1本のラベルから、ここまでわかった</h2>
+  <div class="body">
+    <div class="pics">
+      <img src="photos/coffee_3_ingredients.jpg" alt="">
+      <div class="cap">筆者撮影（185g缶）</div>
+    </div>
+    <div class="notes">
+      <div class="n card">
+        <span class="lb" style="background:var(--ink)">品名</span>
+        <div class="t">「コーヒー」＝豆をしっかり使った証拠</div>
+        <div class="d">100gあたり生豆換算5g以上なら「コーヒー」。少ないと「コーヒー飲料」「コーヒー入り清涼飲料」になる</div>
+        <div class="src">業界の表示ルール（公正競争規約）／筆者が追加で確認</div>
+      </div>
+      <div class="n card">
+        <span class="lb" style="background:#b45309">「／」の前</span>
+        <div class="t">先頭は「牛乳（国内製造）」＝重さ1位</div>
+        <div class="d">（国内製造）は重さ1位の原材料にだけ付く産地の表示。続いてコーヒー、砂糖</div>
+      </div>
+      <div class="n card">
+        <span class="lb" style="background:var(--wash)">「／」の後ろ＝添加物</span>
+        <div class="adds">
+          <div class="add"><b>香料</b><span>香りを引き立てる</span></div>
+          <div class="add"><b>カゼインNa</b><span>牛乳のたんぱく質由来。ミルクを安定</span></div>
+          <div class="add"><b>乳化剤</b><span>水と油（乳脂肪）をなじませる</span></div>
+        </div>
+      </div>
+      <div class="n card">
+        <span class="lb" style="background:var(--danger)">注意書き</span>
+        <div class="t">「固まり浮遊・沈殿することが…」</div>
+        <div class="d">ミルク分が固まることがあるが品質は問題なし。だから乳化剤とカゼインNaで安定させている</div>
+      </div>
+    </div>
+  </div>
+  <div class="credit">Geminiとやってみた｜商品ラベル編</div>
+</section>
+
+<!-- 02e Geminiの答えを確かめた -->
+<section class="fig" id="f02e">
+  <span class="tag" style="background:var(--sup)">ステップ3：確かめる</span>
+  <h2>Geminiの答えを、実物と資料で確かめた</h2>
+  <div class="rows">
+    <div class="row card"><div class="judge" style="background:var(--sup)">✓</div><div><div class="t">原材料の読み取り</div><div class="d">「牛乳（国内製造）、コーヒー、砂糖／香料、カゼインNa、乳化剤」実物と一致</div></div></div>
+    <div class="row card"><div class="judge" style="background:var(--sup)">✓</div><div><div class="t">角砂糖の計算：1缶で約3〜4個分</div><div class="d">炭水化物6.8g（100g当たり）× 1.85 ＝ 約12.6g。計算は正しい</div></div></div>
+    <div class="row card"><div class="judge" style="background:#d97706">△</div><div><div class="t">「WHOの目安の半分に達する」</div><div class="d">炭水化物には牛乳の乳糖も含まれる。WHOが減らそうと言う「遊離糖類」に乳糖は入らないので、実際は半分より少なめ</div></div></div>
+    <div class="row card"><div class="judge" style="background:#d97706">△</div><div><div class="t">「カフェインは1本約100〜150mg」</div><div class="d">ラベルに記載なし。メーカーの公表値も見つからず、あくまで目安</div></div></div>
+  </div>
+  <div class="lesson">AIの答えは<em>だいたい合っている。でも数字は確かめる</em></div>
+  <div class="credit">Geminiとやってみた｜商品ラベル編</div>
 </section>
 
 <!-- 03 洗剤 -->

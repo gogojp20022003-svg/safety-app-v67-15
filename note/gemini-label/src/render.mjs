@@ -13,7 +13,9 @@ const OUT = path.join(here, '..', 'images');
 const FIGS = {
   f00: '00_eyecatch.png',
   f01: '01_steps.png',
-  f02: '02_food.png',
+  f02a: '02a_coffee_retake.png',
+  f02c: '02c_coffee_label.png',
+  f02e: '02e_coffee_check.png',
   f03: '03_detergent.png',
   f04: '04_cosmetics.png',
   f05: '05_supplement.png',
