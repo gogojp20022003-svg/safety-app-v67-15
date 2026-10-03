@@ -8,6 +8,7 @@
 |---|---|
 | `article.md` | note本文（Markdown） |
 | `article.html` | コピペ用プレビュー（ブラウザで開いて全選択→noteに貼り付け） |
+| `images.html` | 画像を本文の順に並べた保存用ページ（スマホは長押しで保存） |
 | `images/00_eyecatch.png` | 見出し画像（1280×670、noteの推奨比率） |
 | `images/01〜06_*.png` | 本文中の図解・Gemini実画面（`02a`〜`02e` は缶コーヒー実演） |
 | `src/photos/` | 缶コーヒーの撮影写真（マスター撮影） |

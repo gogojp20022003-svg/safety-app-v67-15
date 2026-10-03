@@ -78,6 +78,26 @@ table {{ border-collapse: collapse; width: 100%; }} th, td {{ border: 1px solid 
 </body></html>
 """
 
+IMAGES_OUT = ROOT / "images.html"
+
+
+def image_list(md: str) -> str:
+    """本文に出てくる順に画像を並べた、保存用ページの本文を作る。"""
+    items = ['<h1>画像一覧（本文の順）</h1>',
+             '<p>スマホは画像を長押し→保存。PCは「保存」リンクから。見出し画像は一番上の 00_eyecatch.png です。</p>',
+             '<figure><img src="images/00_eyecatch.png" alt=""><figcaption>00_eyecatch.png（見出し画像）'
+             ' <a href="images/00_eyecatch.png" download>保存</a></figcaption></figure>']
+    for alt, src in re.findall(r"!\[(.*?)\]\((.*?)\)", md):
+        name = html.escape(Path(src).name)
+        items.append(f'<figure><img src="{html.escape(src)}" alt="">'
+                     f'<figcaption>{name}（{html.escape(alt)}） <a href="{html.escape(src)}" download>保存</a></figcaption></figure>')
+    return "\n".join(items)
+
+
 if __name__ == "__main__":
-    OUT.write_text(TEMPLATE.format(body=convert(SRC.read_text(encoding="utf-8"))), encoding="utf-8")
+    md = SRC.read_text(encoding="utf-8")
+    OUT.write_text(TEMPLATE.format(body=convert(md)), encoding="utf-8")
     print("wrote", OUT)
+    IMAGES_OUT.write_text(TEMPLATE.format(body=image_list(md)).replace(
+        "</style>", "img {{ width: 100%; border-radius: 8px; }} figure {{ margin: 0 0 28px; }} figcaption {{ font-size: .9em; color: #555; }}</style>".replace("{{", "{").replace("}}", "}")), encoding="utf-8")
+    print("wrote", IMAGES_OUT)
