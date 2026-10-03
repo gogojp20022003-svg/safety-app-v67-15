@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Label Diagrams</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1f2937;
+    --sub: #4b5563;
+    --mute: #9ca3af;
+    --bg: #fffaf3;
+    --card: #ffffff;
+    --line: #e5e7eb;
+    --food: #ef7d1a;
+    --food-soft: #fff1e3;
+    --wash: #2b72e6;
+    --wash-soft: #e7f0ff;
+    --cos: #e0508f;
+    --cos-soft: #ffe8f2;
+    --sup: #1f9a63;
+    --sup-soft: #e3f6ec;
+    --danger: #dc2626;
+    --danger-soft: #fee2e2;
+    --gem: #6d5dfc;
+    --gem-soft: #eeecff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Noto Sans JP", sans-serif; background: #ddd; color: var(--ink); }
+  .fig { width: 1280px; background: var(--bg); padding: 56px 64px; margin: 0 0 40px; position: relative; overflow: hidden; }
+  .fig h2 { font-size: 44px; font-weight: 900; letter-spacing: .02em; line-height: 1.3; }
+  .fig .lead { font-size: 26px; color: var(--sub); margin-top: 8px; font-weight: 500; }
+  .tag { display: inline-block; font-size: 22px; font-weight: 700; padding: 6px 18px; border-radius: 999px; color: #fff; margin-bottom: 14px; }
+  .credit { position: absolute; right: 28px; bottom: 16px; font-size: 18px; color: var(--mute); }
+  .card { background: var(--card); border-radius: 24px; box-shadow: 0 4px 0 rgba(0,0,0,.06); border: 2px solid var(--line); }
+  .mono { font-family: "Noto Sans JP", sans-serif; }
+
+  /* 00 eyecatch */
+  #f00 { height: 670px; padding: 0; background: linear-gradient(135deg, #fff7ec 0%, #fff 55%, #f1efff 100%); }
+  #f00 .wrap { position: absolute; inset: 0; padding: 64px 72px; display: flex; flex-direction: column; justify-content: center; }
+  #f00 .series { display: inline-flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; color: var(--gem); background: var(--gem-soft); padding: 10px 26px; border-radius: 999px; align-self: flex-start; }
+  #f00 h1 { font-size: 76px; font-weight: 900; line-height: 1.25; margin-top: 28px; letter-spacing: .01em; }
+  #f00 h1 em { font-style: normal; background: linear-gradient(transparent 62%, #ffd27a 62%); }
+  #f00 .sub { font-size: 32px; font-weight: 700; color: var(--sub); margin-top: 22px; }
+  #f00 .chips { display: flex; gap: 14px; margin-top: 34px; }
+  #f00 .chip { font-size: 28px; font-weight: 900; color: #fff; padding: 10px 26px; border-radius: 16px; }
+  #f00 .phone { position: absolute; right: 70px; top: 110px; width: 250px; height: 450px; border-radius: 40px; background: #1f2937; padding: 16px; transform: rotate(6deg); box-shadow: 0 20px 40px rgba(0,0,0,.18); }
+  #f00 .screen { width: 100%; height: 100%; border-radius: 28px; background: #fff; padding: 22px 18px; display: flex; flex-direction: column; gap: 12px; }
+  #f00 .bub { border-radius: 16px; padding: 10px 12px; font-size: 17px; font-weight: 700; line-height: 1.45; }
+  #f00 .bub.me { background: #e5e7eb; align-self: flex-end; white-space: nowrap; }
+  #f00 .bub.ai { background: var(--gem-soft); color: #3b2fd1; width: 92%; }
+  #f00 .photo { height: 110px; border-radius: 12px; background: repeating-linear-gradient(0deg, #f3f4f6 0 14px, #d1d5db 14px 17px); border: 2px solid #d1d5db; align-self: flex-end; width: 80%; }
+
+  /* 01 steps */
+  #f01 .row { display: flex; align-items: stretch; gap: 0; margin-top: 40px; }
+  #f01 .step { flex: 1; padding: 34px 22px 30px; text-align: center; }
+  #f01 .num { width: 64px; height: 64px; border-radius: 50%; color: #fff; font-size: 34px; font-weight: 900; display: grid; place-items: center; margin: 0 auto 16px; }
+  #f01 .icon { height: 120px; display: grid; place-items: center; }
+  #f01 .step h3 { font-size: 38px; font-weight: 900; margin-top: 10px; }
+  #f01 .step ul { list-style: none; font-size: 22px; color: var(--sub); margin-top: 14px; line-height: 1.75; text-align: left; white-space: nowrap; }
+  #f01 .step li::before { content: "✓ "; color: var(--sup); font-weight: 900; }
+  #f01 .arrow { width: 40px; display: grid; place-items: center; font-size: 56px; color: var(--mute); font-weight: 900; }
+  #f01 .note { margin-top: 30px; font-size: 26px; font-weight: 700; background: var(--danger-soft); color: #991b1b; padding: 18px 26px; border-radius: 16px; }
+
+  /* 02 food */
+  #f02 .label { margin-top: 34px; padding: 26px 30px; font-size: 27px; line-height: 1.9; border: 3px solid var(--ink); border-radius: 12px; background: #fff; }
+  #f02 .label b { font-weight: 900; }
+  #f02 .seg-a { background: #fff4c2; padding: 2px 6px; border-radius: 6px; }
+  #f02 .seg-b { background: #dcecff; padding: 2px 6px; border-radius: 6px; }
+  #f02 .slash { color: var(--danger); font-weight: 900; font-size: 46px; padding: 0 6px; vertical-align: -4px; }
+  #f02 .seg-c { white-space: nowrap; background: var(--danger-soft); padding: 2px 6px; border-radius: 6px; font-weight: 700; }
+  #f02 .legend { display: flex; gap: 18px; margin-top: 22px; }
+  #f02 .lg { flex: 1; padding: 18px 22px; border-radius: 16px; font-size: 22px; line-height: 1.5; }
+  #f02 .lg b { display: block; font-size: 28px; font-weight: 900; margin-bottom: 4px; }
+  #f02 .allergy { display: flex; gap: 22px; margin-top: 30px; }
+  #f02 .al { flex: 1; padding: 24px 26px; }
+  #f02 .al .q { font-size: 25px; font-weight: 700; background: #f3f4f6; padding: 10px 14px; border-radius: 10px; }
+  #f02 .al .a { font-size: 28px; font-weight: 900; margin-top: 14px; }
+  #f02 .al .d { font-size: 23px; color: var(--sub); margin-top: 6px; line-height: 1.5; }
+  #f02 .news { margin-top: 24px; display: flex; align-items: center; gap: 18px; background: var(--food-soft); border: 2px solid var(--food); border-radius: 16px; padding: 16px 22px; font-size: 25px; font-weight: 700; }
+  #f02 .news .badge { background: var(--food); color: #fff; font-weight: 900; padding: 6px 14px; border-radius: 10px; white-space: nowrap; }
+
+  /* 03 detergent */
+  #f03 .scale { margin-top: 40px; }
+  #f03 .bar { height: 54px; border-radius: 27px; background: linear-gradient(90deg, #ef4444 0%, #f59e0b 25%, #22c55e 50%, #3b82f6 75%, #7c3aed 100%); position: relative; }
+  #f03 .ticks { display: flex; justify-content: space-between; font-size: 22px; color: var(--sub); margin-top: 8px; padding: 0 12px; font-weight: 700; }
+  #f03 .zones { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 20px; }
+  #f03 .zone { padding: 22px 22px; }
+  #f03 .zone h3 { font-size: 32px; font-weight: 900; }
+  #f03 .zone .good { font-size: 20px; color: var(--sub); margin-top: 8px; }
+  #f03 .zone .dirt { font-size: 26px; font-weight: 700; margin-top: 4px; line-height: 1.5; }
+  #f03 .danger { margin-top: 32px; background: var(--danger-soft); border: 4px solid var(--danger); border-radius: 24px; padding: 26px 26px; display: flex; align-items: center; gap: 16px; }
+  #f03 .bottle { width: 200px; padding: 18px 10px; border-radius: 18px; text-align: center; color: #fff; font-weight: 900; font-size: 28px; line-height: 1.35; }
+  #f03 .bottle small { display: block; font-size: 20px; font-weight: 700; opacity: .95; margin-top: 4px; }
+  #f03 .op { font-size: 64px; font-weight: 900; color: var(--danger); }
+  #f03 .gas { flex: 1; }
+  #f03 .gas .big { font-size: 36px; white-space: nowrap; font-weight: 900; color: var(--danger); }
+  #f03 .gas p { font-size: 23px; margin-top: 6px; line-height: 1.55; font-weight: 500; }
+  #f03 .warn { display: inline-block; background: #facc15; color: #111; font-weight: 900; font-size: 24px; padding: 4px 14px; border-radius: 8px; margin-bottom: 8px; border: 3px solid #111; }
+
+  /* 04 cosmetics */
+  #f04 .body { display: flex; gap: 34px; margin-top: 34px; }
+  #f04 .list { flex: 1.25; padding: 26px 28px; }
+  #f04 .item { display: flex; align-items: center; gap: 14px; margin: 9px 0; }
+  #f04 .item .nm { width: 280px; font-size: 26px; font-weight: 700; }
+  #f04 .item .bar { height: 28px; border-radius: 8px; }
+  #f04 .line { border-top: 4px dashed var(--cos); margin: 30px 0 22px; position: relative; }
+  #f04 .line span { position: absolute; right: 0; top: -22px; background: var(--cos); color: #fff; font-size: 21px; font-weight: 900; padding: 4px 12px; border-radius: 8px; }
+  #f04 .side { flex: 1; display: flex; flex-direction: column; gap: 18px; }
+  #f04 .rule { padding: 22px 24px; }
+  #f04 .rule h3 { font-size: 27px; font-weight: 900; }
+  #f04 .rule p { font-size: 23px; color: var(--sub); margin-top: 8px; line-height: 1.55; }
+  #f04 .keys { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px; }
+  #f04 .key { display: flex; align-items: center; gap: 12px; font-size: 23px; white-space: nowrap; font-weight: 700; }
+  #f04 .sw { width: 28px; height: 28px; border-radius: 6px; flex: none; }
+  #f04 .stop { margin-top: 24px; background: var(--cos-soft); border-radius: 18px; padding: 18px 24px; font-size: 25px; font-weight: 700; line-height: 1.5; }
+
+  /* 05 supplement */
+  #f05 .body { display: flex; gap: 36px; margin-top: 30px; align-items: flex-start; }
+  #f05 .pillbox { flex: 1; padding: 26px; text-align: center; }
+  #f05 .pillbox h3 { font-size: 30px; font-weight: 900; }
+  #f05 .pillbox .cap { font-size: 21px; color: var(--sub); margin-top: 10px; line-height: 1.5; }
+  #f05 .right { flex: 1.1; display: flex; flex-direction: column; gap: 20px; }
+  #f05 .box { padding: 22px 26px; }
+  #f05 .box h3 { font-size: 30px; font-weight: 900; }
+  #f05 .vits { display: flex; gap: 12px; margin-top: 14px; }
+  #f05 .vit { flex: 1; text-align: center; border-radius: 14px; padding: 10px 0; font-size: 30px; font-weight: 900; }
+  #f05 .box p { font-size: 23px; color: var(--sub); margin-top: 10px; line-height: 1.55; }
+  #f05 .fight { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; }
+  #f05 .pill { padding: 12px 18px; border-radius: 14px; font-size: 24px; font-weight: 900; text-align: center; line-height: 1.3; }
+  #f05 .vs { font-size: 40px; font-weight: 900; color: var(--danger); }
+
+  #f05 .capwrap { display: flex; gap: 22px; margin: 22px auto 0; width: 420px; height: 340px; }
+  #f05 .capsule { width: 130px; height: 340px; border-radius: 65px; overflow: hidden; display: flex; flex-direction: column; border: 4px solid #1f2937; flex: none; }
+  #f05 .caplabels { display: flex; flex-direction: column; text-align: left; }
+  #f05 .cl { display: flex; flex-direction: column; justify-content: center; border-left: 3px solid #e5e7eb; padding-left: 14px; min-height: 0; }
+  #f05 .cl b { font-size: 23px; font-weight: 900; line-height: 1.3; white-space: nowrap; }
+  #f05 .cl span { font-size: 18px; color: var(--sub); line-height: 1.35; }
+
+  /* 06 summary */
+  #f06 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 34px; }
+  #f06 .cell { padding: 0; overflow: hidden; }
+  #f06 .cell .hd { color: #fff; font-size: 34px; font-weight: 900; padding: 14px 26px; }
+  #f06 .cell .rows { padding: 18px 26px 22px; }
+  #f06 .r { display: flex; gap: 14px; align-items: flex-start; margin: 10px 0; }
+  #f06 .r .k { flex: none; font-size: 20px; font-weight: 900; padding: 4px 12px; border-radius: 8px; margin-top: 4px; }
+  #f06 .r .v { font-size: 26px; font-weight: 700; line-height: 1.45; }
+  #f06 .foot { margin-top: 28px; text-align: center; font-size: 30px; font-weight: 900; }
+  #f06 .foot em { font-style: normal; background: linear-gradient(transparent 60%, #ffd27a 60%); }
+</style>
+</head>
+<body>
+
+<!-- 00 アイキャッチ -->
+<section class="fig" id="f00">
+  <div class="wrap">
+    <div class="series">✦ Geminiとやってみた</div>
+    <h1>商品ラベルの<br><em>「呪文」</em>を読み解く！</h1>
+    <div class="sub">撮って、聞くだけ。成分と注意書きの意味がわかる</div>
+    <div class="chips">
+      <span class="chip" style="background:var(--food)">食べ物</span>
+      <span class="chip" style="background:var(--wash)">洗剤</span>
+      <span class="chip" style="background:var(--cos)">化粧品</span>
+      <span class="chip" style="background:var(--sup)">サプリ</span>
+    </div>
+  </div>
+  <div class="phone"><div class="screen">
+    <div class="photo"></div>
+    <div class="bub me">この成分、なに？</div>
+    <div class="bub ai">「／」の後ろは添加物です。調味料（アミノ酸等）は、うま味を足す役目で…</div>
+  </div></div>
+</section>
+
+<!-- 01 3ステップ -->
+<section class="fig" id="f01">
+  <h2>やり方はたったの3ステップ</h2>
+  <p class="lead">スマホとGeminiアプリだけでOK。専門知識はいりません。</p>
+  <div class="row">
+    <div class="step card">
+      <div class="num" style="background:var(--food)">1</div>
+      <div class="icon">
+        <svg width="130" height="104" viewBox="0 0 130 104"><rect x="4" y="18" width="122" height="82" rx="16" fill="#1f2937"/><rect x="40" y="6" width="50" height="20" rx="6" fill="#1f2937"/><circle cx="65" cy="59" r="28" fill="#fff"/><circle cx="65" cy="59" r="18" fill="#ef7d1a"/><circle cx="104" cy="36" r="6" fill="#fbbf24"/></svg>
+      </div>
+      <h3>撮る</h3>
+      <ul><li>成分と注意書きを1枚に</li><li>明るい場所で真上から</li><li>小さい字は2枚に分ける</li></ul>
+    </div>
+    <div class="arrow">›</div>
+    <div class="step card">
+      <div class="num" style="background:var(--gem)">2</div>
+      <div class="icon">
+        <svg width="140" height="110" viewBox="0 0 140 110"><rect x="4" y="8" width="96" height="62" rx="18" fill="#e5e7eb"/><path d="M30 70 L22 92 L52 70 Z" fill="#e5e7eb"/><rect x="40" y="38" width="96" height="62" rx="18" fill="#6d5dfc"/><path d="M110 100 L122 108 L104 98Z" fill="#6d5dfc"/><path d="M88 52 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#fff"/></svg>
+      </div>
+      <h3>送って聞く</h3>
+      <ul><li>写真＋指示文をセットで</li><li>「中学生にもわかる言葉で」</li><li>「読めない字は言って」</li></ul>
+    </div>
+    <div class="arrow">›</div>
+    <div class="step card">
+      <div class="num" style="background:var(--sup)">3</div>
+      <div class="icon">
+        <svg width="120" height="110" viewBox="0 0 120 110"><rect x="10" y="6" width="74" height="96" rx="10" fill="#fff" stroke="#1f2937" stroke-width="6"/><rect x="24" y="26" width="46" height="6" rx="3" fill="#9ca3af"/><rect x="24" y="42" width="46" height="6" rx="3" fill="#9ca3af"/><rect x="24" y="58" width="30" height="6" rx="3" fill="#9ca3af"/><circle cx="82" cy="72" r="26" fill="#1f9a63"/><path d="M70 72 l9 9 16 -18" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>確かめる</h3>
+      <ul><li>答えとラベル実物を見比べ</li><li>読み間違いがないか確認</li><li>アレルギーと薬は専門家へ</li></ul>
+    </div>
+  </div>
+  <div class="note">⚠ AIは読めない文字を「それっぽく」埋めることがあります。ステップ3を飛ばさないのが一番のコツ！</div>
+  <div class="credit">Geminiとやってみた｜商品ラベル編</div>
+</section>
+
+<!-- 02 食べ物 -->
+<section class="fig" id="f02">
+  <span class="tag" style="background:var(--food)">食べ物編</span>
+  <h2>「／（スラッシュ）」が食材と添加物の境界線</h2>
+  <div class="label">
+    <b>原材料名：</b><span class="seg-a">じゃがいも（国産）、植物油、食塩、たんぱく加水分解物</span><br><span class="slash">／</span><span class="seg-b">調味料（アミノ酸等）、香料、甘味料（ステビア）</span>、<br><span class="seg-c">（一部に小麦・大豆を含む）</span>
+  </div>
+  <div class="legend">
+    <div class="lg" style="background:#fff4c2"><b>「／」の前＝食材</b>重さの多い順に並ぶ</div>
+    <div class="lg" style="background:#dcecff"><b>「／」の後ろ＝添加物</b>多い順。（ ）内は物質名</div>
+    <div class="lg" style="background:var(--danger-soft)"><b>アレルギー表示</b>原材料にこれが入っている</div>
+  </div>
+  <div class="allergy">
+    <div class="al card">
+      <div class="q">「一部に小麦・大豆を含む」</div>
+      <div class="a" style="color:var(--danger)">＝ 中に入っている</div>
+      <div class="d">この食品の原材料そのものに使われている</div>
+    </div>
+    <div class="al card">
+      <div class="q">「同じ工場で えび を含む製品を製造」</div>
+      <div class="a" style="color:var(--food)">＝ ごく微量 混ざるかも</div>
+      <div class="d">原材料ではないが、工場で扱っている（コンタミネーション）</div>
+    </div>
+  </div>
+  <div class="news"><span class="badge">2026年4月〜</span>表示義務の「特定原材料」にカシューナッツが追加され9品目に（2028年3月末まで移行期間）</div>
+  <div class="credit">※ラベルは架空の例です</div>
+</section>
+
+<!-- 03 洗剤 -->
+<section class="fig" id="f03">
+  <span class="tag" style="background:var(--wash)">洗剤編</span>
+  <h2>汚れと「反対の性質」の洗剤をぶつける</h2>
+  <div class="scale">
+    <div class="bar"></div>
+    <div class="ticks"><span>← 酸性</span><span>中性</span><span>アルカリ性 →</span></div>
+  </div>
+  <div class="zones">
+    <div class="zone card" style="border-color:#ef4444">
+      <h3 style="color:#dc2626">酸性の洗剤</h3>
+      <div class="good">得意な汚れ（アルカリ性の汚れ）</div>
+      <div class="dirt">水あか・石けんカス<br>トイレの尿石</div>
+    </div>
+    <div class="zone card" style="border-color:#22c55e">
+      <h3 style="color:#16a34a">中性の洗剤</h3>
+      <div class="good">得意な汚れ</div>
+      <div class="dirt">普段の軽い汚れ<br>素材にやさしい</div>
+    </div>
+    <div class="zone card" style="border-color:#3b82f6">
+      <h3 style="color:#2563eb">アルカリ性の洗剤</h3>
+      <div class="good">得意な汚れ（酸性の汚れ）</div>
+      <div class="dirt">油汚れ・皮脂<br>タンパク汚れ</div>
+    </div>
+  </div>
+  <div class="danger">
+    <div class="bottle" style="background:#2563eb">塩素系<small>カビ取り剤・漂白剤</small></div>
+    <div class="op">＋</div>
+    <div class="bottle" style="background:#dc2626">酸性タイプ<small>クエン酸・酢など</small></div>
+    <div class="op">→</div>
+    <div class="gas">
+      <span class="warn">まぜるな危険</span>
+      <div class="big">有毒な塩素ガス発生！</div>
+      <p>目・のど・肺を傷つける。同じ日に続けて使わない／換気／手袋とメガネ</p>
+    </div>
+  </div>
+  <div class="credit">Geminiとやってみた｜商品ラベル編</div>
+</section>
+
+<!-- 04 化粧品 -->
+<section class="fig" id="f04">
+  <span class="tag" style="background:var(--cos)">化粧品編</span>
+  <h2>全成分は「多い順」。ただし1%以下は順不同</h2>
+  <div class="body">
+    <div class="list card">
+      <div class="item"><span class="nm">水</span><span class="bar" style="width:330px;background:#93c5fd"></span></div>
+      <div class="item"><span class="nm">BG</span><span class="bar" style="width:170px;background:#93c5fd"></span></div>
+      <div class="item"><span class="nm">グリセリン</span><span class="bar" style="width:140px;background:#93c5fd"></span></div>
+      <div class="item"><span class="nm">ペンチレングリコール</span><span class="bar" style="width:70px;background:#93c5fd"></span></div>
+      <div class="line"><span>このあたりから1%以下 → 順不同OK</span></div>
+      <div class="item"><span class="nm">ヒアルロン酸Na</span><span class="bar" style="width:22px;background:#f9a8d4"></span></div>
+      <div class="item"><span class="nm">セラミドNP</span><span class="bar" style="width:18px;background:#f9a8d4"></span></div>
+      <div class="item"><span class="nm">クエン酸Na</span><span class="bar" style="width:16px;background:#fcd34d"></span></div>
+      <div class="item"><span class="nm">フェノキシエタノール</span><span class="bar" style="width:16px;background:#fcd34d"></span></div>
+    </div>
+    <div class="side">
+      <div class="rule card">
+        <h3>宣伝の成分が後ろでも普通</h3>
+        <p>ヒアルロン酸やセラミドは、少量でも働く成分。前にあるほど量が多い、が基本ルールです。</p>
+      </div>
+      <div class="keys card">
+        <div class="key"><span class="sw" style="background:#93c5fd"></span>土台・保湿（水・BGなど）</div>
+        <div class="key"><span class="sw" style="background:#f9a8d4"></span>うるおいのサポート役</div>
+        <div class="key"><span class="sw" style="background:#fcd34d"></span>品質を守る（防腐剤など）</div>
+      </div>
+    </div>
+  </div>
+  <div class="stop">🛑 赤み・かゆみ・はれ・白い斑点などが出たら使用中止 → 商品を持って皮膚科へ</div>
+  <div class="credit">※成分の量はイメージです</div>
+</section>
+
+<!-- 05 サプリ -->
+<section class="fig" id="f05">
+  <span class="tag" style="background:var(--sup)">サプリ編</span>
+  <h2>粒の大半は「形を作る成分」。飲みすぎ注意</h2>
+  <div class="body">
+    <div class="pillbox card">
+      <h3>1粒の中身（イメージ）</h3>
+      <div class="capwrap">
+        <div class="capsule">
+          <div class="seg" style="flex:19;background:#1f9a63"></div>
+          <div class="seg" style="flex:21;background:#c4b5fd"></div>
+          <div class="seg" style="flex:60;background:#d6c7a8"></div>
+        </div>
+        <div class="caplabels">
+          <div class="cl" style="flex:19"><b style="color:#1f9a63">ビタミン等</b><span>少量で働く本命</span></div>
+          <div class="cl" style="flex:21"><b style="color:#7c3aed">固める・すべり止め</b><span>結晶セルロース等</span></div>
+          <div class="cl" style="flex:60"><b>形を作る土台</b><span>還元麦芽糖水飴<br>デキストリン</span></div>
+        </div>
+      </div>
+      <div class="cap">先頭が栄養素でないのは普通のこと</div>
+    </div>
+    <div class="right">
+      <div class="box card">
+        <h3>たまりやすいビタミンに注意</h3>
+        <div class="vits">
+          <div class="vit" style="background:#fef3c7;color:#b45309">A</div>
+          <div class="vit" style="background:#fef3c7;color:#b45309">D</div>
+          <div class="vit" style="background:#fef3c7;color:#b45309">E</div>
+          <div class="vit" style="background:#fef3c7;color:#b45309">K</div>
+        </div>
+        <p>脂溶性ビタミンは体にたまりやすい。「多量摂取で健康が増進するものではありません」は本気の警告です。</p>
+      </div>
+      <div class="box card">
+        <h3>薬と「けんか」することがある</h3>
+        <div class="fight">
+          <div class="pill" style="background:#dbeafe;color:#1d4ed8">血液サラサラの薬<br><small>（ワルファリン）</small></div>
+          <div class="vs">✕</div>
+          <div class="pill" style="background:var(--sup-soft);color:#15803d">ビタミンK</div>
+        </div>
+        <p>薬の効き目が弱まることも。服薬中・通院中は医師・薬剤師に相談を。</p>
+      </div>
+    </div>
+  </div>
+  <div class="credit">※割合はイメージです</div>
+</section>
+
+<!-- 06 まとめ -->
+<section class="fig" id="f06">
+  <h2>裏ラベルは「成分」と「注意書き」の2部構成</h2>
+  <p class="lead">4ジャンル、ここだけ見ればOKのチェックポイント</p>
+  <div class="grid">
+    <div class="cell card"><div class="hd" style="background:var(--food)">食べ物</div><div class="rows">
+      <div class="r"><span class="k" style="background:var(--food-soft);color:var(--food)">成分</span><span class="v">「／」の前は食材、後ろは添加物</span></div>
+      <div class="r"><span class="k" style="background:var(--danger-soft);color:var(--danger)">注意</span><span class="v">アレルギー表示と「同じ工場で…」</span></div>
+    </div></div>
+    <div class="cell card"><div class="hd" style="background:var(--wash)">洗剤</div><div class="rows">
+      <div class="r"><span class="k" style="background:var(--wash-soft);color:var(--wash)">成分</span><span class="v">液性（酸性・中性・アルカリ性）</span></div>
+      <div class="r"><span class="k" style="background:var(--danger-soft);color:var(--danger)">注意</span><span class="v">まぜるな危険（塩素系×酸性）</span></div>
+    </div></div>
+    <div class="cell card"><div class="hd" style="background:var(--cos)">化粧品</div><div class="rows">
+      <div class="r"><span class="k" style="background:var(--cos-soft);color:var(--cos)">成分</span><span class="v">多い順。1%以下は順不同</span></div>
+      <div class="r"><span class="k" style="background:var(--danger-soft);color:var(--danger)">注意</span><span class="v">肌に異常が出たら使用中止</span></div>
+    </div></div>
+    <div class="cell card"><div class="hd" style="background:var(--sup)">サプリ</div><div class="rows">
+      <div class="r"><span class="k" style="background:var(--sup-soft);color:var(--sup)">成分</span><span class="v">先頭は「形を作る成分」が多い</span></div>
+      <div class="r"><span class="k" style="background:var(--danger-soft);color:var(--danger)">注意</span><span class="v">飲みすぎ・薬との飲み合わせ</span></div>
+    </div></div>
+  </div>
+  <div class="foot">迷ったら <em>撮って → Geminiに聞いて → 実物で確かめる</em></div>
+  <div class="credit">Geminiとやってみた｜商品ラベル編</div>
+</section>
+
+</body>
+</html>
